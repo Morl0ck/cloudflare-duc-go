@@ -1,0 +1,9 @@
+services:
+  cloudflare-duc:
+    restart: unless-stopped
+    environment:
+      - CF_API_TOKEN=<YOUR_API_TOKEN>
+      - CF_ZONE_NAME=<YOUR_ZONE_NAME>
+      - CF_RECORD_NAME=<YOUR_RECORD_NAME>
+      - UPDATE_INTERVAL=${UPDATE_INTERVAL:-5}
+    build: .
