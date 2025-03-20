@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"time"
@@ -65,6 +66,11 @@ func main() {
 				continue
 			}
 
+			if !isValidIP(currentIP) {
+				log.Printf("Invalid IP address: '%s'", currentIP)
+				continue
+			}
+	
 			log.Printf("Current public IP: %s", currentIP)
 
 			if currentIP != recordIP {
@@ -122,4 +128,8 @@ func updateDNSRecord(api *cloudflare.API, zoneID, recordID, newIP string) error 
 		Content: newIP,
 	})
 	return err
+}
+
+func isValidIP(ip string) bool {
+    return net.ParseIP(ip) != nil
 }
